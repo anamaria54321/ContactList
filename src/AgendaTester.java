@@ -9,11 +9,13 @@ public class AgendaTester {
 //        Contact c5 = new Contact("Cicescu", "Cici", Prefix.IT, "0723568912");
 //        Contact c6 = new Contact("Vivescu", "Vivi", Prefix.GR, "0723589547");
 //        Contact c7 = new Contact("Didescu", "Didi", Prefix.DE, "0756982356");
-Agenda agenda = new Agenda();
-//agenda.addContact();
-        agenda.addContactGroup();
-        agenda.showContactGroup();
-//agenda.deleteContact();
-//        agenda.showContactGroup();
+        Agenda agenda = new Agenda();
+
+        agenda.listContacts();
+        agenda.addContact();
+        agenda.editContact();
+        agenda.removeContact();
+        agenda.searchContact();
+
     }
 }

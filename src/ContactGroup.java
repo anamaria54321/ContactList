@@ -5,20 +5,22 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 public class ContactGroup {
-    private String name;
-    public Set<Contact> contactGroup = new TreeSet<Contact>();
+    private Set<Contact> contactGroup;
 
 
-    public ContactGroup(String name, Set<Contact> contacts) {
-        this.name = name;
-        this.contactGroup = contacts;
-    }
-
-    public String getName() {
-        return name;
+    public ContactGroup() {
+        this.contactGroup = new TreeSet<Contact>();;
     }
 
     public Set<Contact> getContacts() {
+        return contactGroup;
+    }
+
+    public void addContact(Contact contact) {
+        contactGroup.add(contact);
+    }
+
+    public Set<Contact> getContactGroup() {
         return contactGroup;
     }
 
@@ -27,12 +29,11 @@ public class ContactGroup {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ContactGroup that = (ContactGroup) o;
-        return Objects.equals(name, that.name) &&
-                Objects.equals(contactGroup, that.contactGroup);
+        return Objects.equals(contactGroup, that.contactGroup);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, contactGroup);
+        return Objects.hash(contactGroup);
     }
 }

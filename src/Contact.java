@@ -1,6 +1,6 @@
 import java.util.Objects;
 
-public class Contact {
+public class Contact implements Comparable<Contact>{
     private String firstName;
     private String lastName;
     //   private Prefix prefix;
@@ -64,7 +64,7 @@ public class Contact {
                 '}';
     }
 
-
+     @Override
     public int compareTo(Contact o) {
         if (firstName.compareToIgnoreCase(o.firstName) != 0) {
             return firstName.compareToIgnoreCase(o.firstName);

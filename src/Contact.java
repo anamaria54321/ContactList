@@ -1,15 +1,18 @@
 import java.util.Objects;
 
 public class Contact {
-   private String firstName;
-   private String lastName;
-   private Prefix prefix;
-   private String number;
+    private String firstName;
+    private String lastName;
+    //   private Prefix prefix;
+    private String number;
 
-    public Contact(String firstName, String lastName, Prefix prefix, String number) {
+    public Contact() {
+
+    }
+
+    public Contact(String firstName, String lastName, String number) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.prefix = prefix;
         this.number = number;
     }
 
@@ -29,14 +32,6 @@ public class Contact {
         this.lastName = lastName;
     }
 
-    public Prefix getPrefix() {
-        return prefix;
-    }
-
-    public void setPrefix(Prefix prefix) {
-        this.prefix = prefix;
-    }
-
     public String getNumber() {
         return number;
     }
@@ -52,13 +47,34 @@ public class Contact {
         Contact contact = (Contact) o;
         return Objects.equals(firstName, contact.firstName) &&
                 Objects.equals(lastName, contact.lastName) &&
-                prefix == contact.prefix &&
                 Objects.equals(number, contact.number);
     }
 
     @Override
     public int hashCode() {
+        return Objects.hash(firstName, lastName, number);
+    }
 
-        return Objects.hash(firstName, lastName, prefix, number);
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", number='" + number + '\'' +
+                '}';
+    }
+
+
+    public int compareTo(Contact o) {
+        if (firstName.compareToIgnoreCase(o.firstName) != 0) {
+            return firstName.compareToIgnoreCase(o.firstName);
+        }
+        if (lastName.compareToIgnoreCase(o.lastName) != 0) {
+            return lastName.compareToIgnoreCase(o.lastName);
+        }
+        if (number.compareToIgnoreCase(o.number) != 0) {
+            return number.compareToIgnoreCase(o.number);
+        }
+        return 0;
     }
 }

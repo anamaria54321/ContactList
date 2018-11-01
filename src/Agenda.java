@@ -1,10 +1,11 @@
 import javax.sql.rowset.Predicate;
+import java.security.Key;
 import java.util.*;
 
 public class Agenda {
     private Map<String, ContactGroup> agenda = new TreeMap<>();
 
-    Scanner sc = new Scanner(System.in);
+
 
     public Map<String, ContactGroup> getAgenda() {
         return agenda;
@@ -23,37 +24,52 @@ public class Agenda {
 //        return c;
 //    }
 
-    private void addContact(String firstName, String lastName, String number) {
+    public void addContact(String firstName, String lastName, String number) {
 
         Contact c = new Contact(firstName, lastName, number);
-        for (String key : agenda.keySet()) {
-            if (key.equalsIgnoreCase(lastName.substring(0, 1))) {
-                agenda.get(key).getContactGroup().add(c);
-                return;
-            }
+
+        String firstLetter = lastName.substring(0, 1);
+        ContactGroup gr = agenda.get(firstLetter);
+
+        if (gr == null) {
+            gr = new ContactGroup();
+            agenda.put(firstLetter, gr);
         }
-        agenda.put(lastName.substring(0, 1).toUpperCase(), new ContactGroup());
-        agenda.get(lastName.substring(0, 1).toUpperCase()).getContactGroup().add(c);
+
+        gr.addContact(c);
+    }
+
+    public void removeContact(String firstName, String lastName, String number) {
+        Contact c = new Contact(firstName, lastName, number);
+        for (Map.Entry<String, ContactGroup> entry : agenda.entrySet()) {
+            System.out.println("\n" + entry.getKey());
+            entry.getValue().getContactGroup().forEach(System.out::println);
+//            if ((key.equalsIgnoreCase(lastName.substring(0, 1))
+//                    && (c.getFirstName().equalsIgnoreCase(firstName)
+//                    && (c.getLastName().equalsIgnoreCase(lastName))))) {
+//                agenda.get(key).getContactGroup().remove(c);
+        }
 
     }
 
-//    public void showContactGroup() {
-//        for (Contact c : addContactGroup()) {
-//            System.out.println(c);
-//        }
-//    }
-//
-//    public Collection<Contact> deleteContact() {
-//        System.out.println("Enter the first name:");
-//        String firstName = sc.nextLine();
-//        System.out.println("Enter the last name:");
-//        String lastName = sc.nextLine();
-//        for (Contact c : contactGroup) {
-//            if (c.getFirstName().equals(firstName) && c.getLastName().equals(lastName))
-//                contactGroup.remove(c);
-//        }
-//        return contactGroup;
-//    }
+    public void editContact(String firstName, String lastName, String number) {
+
+    }
+
+    public void listContacts() {
+           for (Map.Entry<String, ContactGroup> entry : agenda.entrySet()) {
+            System.out.println("\n" + entry.getKey());
+            entry.getValue().getContactGroup().forEach(System.out::println);
+
+        }
+    }
+
+    public void searchContact(String firstName, String lastName, String number) {
+
+    }
+
+
+    }
 //
 //    public Collection<ContactGroup> addContactGroups() {
 //        for (ContactGroup cG : contactGroups) {

@@ -57,11 +57,7 @@ public class Contact implements Comparable<Contact>{
 
     @Override
     public String toString() {
-        return "Contact{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", number='" + number + '\'' +
-                '}';
+        return firstName + "  " +lastName+ "  " + number;
     }
 
      @Override
@@ -77,4 +73,5 @@ public class Contact implements Comparable<Contact>{
         }
         return 0;
     }
+
 }

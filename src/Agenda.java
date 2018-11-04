@@ -6,29 +6,16 @@ public class Agenda {
     private Map<String, ContactGroup> agenda = new TreeMap<>();
 
 
-
     public Map<String, ContactGroup> getAgenda() {
         return agenda;
     }
 
-//    public Contact addContact() {
-//        System.out.println("Enter first name");
-//        String firstName = sc.nextLine();
-//        System.out.println("Enter last name");
-//        String lastName = sc.nextLine();
-////        System.out.println("Enter prefix(Ex. RO, GR, etc)");
-//        System.out.println("Enter the number");
-//        String number = sc.nextLine();
+
+    public void addContact(Contact c) {
+
 //        Contact c = new Contact(firstName, lastName, number);
-////        System.out.println(c);
-//        return c;
-//    }
 
-    public void addContact(String firstName, String lastName, String number) {
-
-        Contact c = new Contact(firstName, lastName, number);
-
-        String firstLetter = lastName.substring(0, 1);
+        String firstLetter = c.getLastName().substring(0, 1);
         ContactGroup gr = agenda.get(firstLetter);
 
         if (gr == null) {
@@ -38,45 +25,56 @@ public class Agenda {
 
         gr.addContact(c);
     }
+//    String firstName, String lastName, String number
+    public void removeContact(Contact c ) {
+//        Contact c = new Contact(firstName, lastName, number);
 
-    public void removeContact(String firstName, String lastName, String number) {
-        Contact c = new Contact(firstName, lastName, number);
-        for (Map.Entry<String, ContactGroup> entry : agenda.entrySet()) {
-            System.out.println("\n" + entry.getKey());
-            entry.getValue().getContactGroup().forEach(System.out::println);
-//            if ((key.equalsIgnoreCase(lastName.substring(0, 1))
-//                    && (c.getFirstName().equalsIgnoreCase(firstName)
-//                    && (c.getLastName().equalsIgnoreCase(lastName))))) {
-//                agenda.get(key).getContactGroup().remove(c);
+        String firstLetter = c.getLastName().substring(0, 1);
+        ContactGroup gr = agenda.get(firstLetter);
+
+        if (gr != null) {
+            gr.getContacts().remove(c);
         }
-
     }
 
-    public void editContact(String firstName, String lastName, String number) {
+    public void editContact(Contact c) {
 
+
+        String firstLetter = c.getLastName().substring(0, 1);
+        ContactGroup gr = agenda.get(firstLetter);
+
+//        if (gr != null) {
+//            if(gr.getContacts().contains(c)){
+//                c.setFirstName();
+//            };
+//        }
     }
 
     public void listContacts() {
-           for (Map.Entry<String, ContactGroup> entry : agenda.entrySet()) {
+        for (Map.Entry<String, ContactGroup> entry : agenda.entrySet()) {
             System.out.println("\n" + entry.getKey());
             entry.getValue().getContactGroup().forEach(System.out::println);
 
         }
     }
 
-    public void searchContact(String firstName, String lastName, String number) {
+//    String firstName, String lastName, String number
+    public void searchContact(Contact c ) {
+//        Contact c = new Contact(firstName, lastName, number);
 
+        String firstLetter = c.getLastName().substring(0, 1);
+        ContactGroup gr = agenda.get(firstLetter);
+
+        if (gr != null) {
+            gr.getContacts().stream()
+                    .filter(Contact -> (c.getLastName().equals(Contact.getLastName())
+                            && (c.getFirstName().equals(Contact.getFirstName()))))
+                    .forEach(System.out::println);
+
+        }
     }
-
-
-    }
-//
-//    public Collection<ContactGroup> addContactGroups() {
-//        for (ContactGroup cG : contactGroups) {
-//            contactGroups.add(addContactGroup());
-//        }
-//        return contactGroups;
-//    }
-
 
 }
+
+
+

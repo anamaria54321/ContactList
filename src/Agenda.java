@@ -1,6 +1,5 @@
-import javax.sql.rowset.Predicate;
-import java.security.Key;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Agenda {
     private Map<String, ContactGroup> agenda = new TreeMap<>();
@@ -13,8 +12,6 @@ public class Agenda {
 
     public void addContact(Contact c) {
 
-//        Contact c = new Contact(firstName, lastName, number);
-
         String firstLetter = c.getLastName().substring(0, 1);
         ContactGroup gr = agenda.get(firstLetter);
 
@@ -25,9 +22,9 @@ public class Agenda {
 
         gr.addContact(c);
     }
-//    String firstName, String lastName, String number
-    public void removeContact(Contact c ) {
-//        Contact c = new Contact(firstName, lastName, number);
+
+
+    public void removeContact(Contact c) {
 
         String firstLetter = c.getLastName().substring(0, 1);
         ContactGroup gr = agenda.get(firstLetter);
@@ -38,7 +35,6 @@ public class Agenda {
     }
 
     public void editContact(Contact c) {
-
 
         String firstLetter = c.getLastName().substring(0, 1);
         ContactGroup gr = agenda.get(firstLetter);
@@ -58,22 +54,38 @@ public class Agenda {
         }
     }
 
-//    String firstName, String lastName, String number
-    public void searchContact(Contact c ) {
-//        Contact c = new Contact(firstName, lastName, number);
+
+    public Optional<Contact> searchContact(Contact c) {
 
         String firstLetter = c.getLastName().substring(0, 1);
         ContactGroup gr = agenda.get(firstLetter);
 
         if (gr != null) {
-            gr.getContacts().stream()
-                    .filter(Contact -> (c.getLastName().equals(Contact.getLastName())
-                            && (c.getFirstName().equals(Contact.getFirstName()))))
-                    .forEach(System.out::println);
-
+            return gr.getContacts().stream()
+                    .filter(contact -> contact.equals(c))
+                    .findFirst();
         }
+        return Optional.empty();
     }
 
+    public List<Contact> searchListContact(String name) {
+        String firstLetter = name.substring(0, 1);
+        ContactGroup gr = agenda.get(firstLetter);
+
+        List<Contact> foundContacts = new ArrayList<>();
+        if (gr != null) {
+            foundContacts.addAll( gr.getContacts().stream()
+                    .filter(contact -> contact.getLastName().equals(name))
+                    .collect(Collectors.toList()));
+        }
+
+        return foundContacts;
+    }
+    public void showSearchListContact(){
+        if ()
+        System.out.println(searchContact());
+
+    }
 }
 
 

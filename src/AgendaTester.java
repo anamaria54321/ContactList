@@ -14,73 +14,71 @@ public class AgendaTester {
         Agenda agenda = new Agenda();
 
 
-        agenda.addContact(createContact());
-        agenda.addContact(createContact());
-        agenda.addContact(createContact());
+//        agenda.addContact(createContact());
+//        agenda.addContact(createContact());
+//        agenda.addContact(createContact());
 //        agenda.addContact("Ionescu", "Ana",  "0745123256");
 //        agenda.addContact("Ionescu", "Ana",  "0745123256");
 //        agenda.addContact("Dinescu", "Ana", "0744447895");
 //        agenda.addContact("Ionescu", "Vivi", "0723589547");
 
-        agenda.listContacts();
+//        agenda.listContacts();
 //        agenda.editContact("Ionescu", "Ana","0745123256");
-        agenda.removeContact(createContact());
-        agenda.listContacts();
+//        agenda.removeContact(createContact());
+//        agenda.listContacts();
 
-        agenda.searchContact(createContact());
+//        agenda.searchContact(createContact());
 
 
 //
-//        showMenu();
-//        optionMenu();
+        showMenu(agenda);
     }
 
-//    public static void showMenu() {
-//
-//        System.out.println(" -----------------------------------------------");
-//        System.out.println("|          Welcome to the Ana Agenda   |");
-//        System.out.println(" -----------------------------------------------");
-//        System.out.println();
-//        System.out.println("                    MAIN MENU                   ");
-//        System.out.println("1. Add contact");
-//        System.out.println("2. List all contacts");
-//        System.out.println("3. Remove contact");
-//        System.out.println("4. Edit contact");
-//        System.out.println("5. Search contact");
-//        System.out.println("6. Exit");
-//        optionMenu();
-//    }
-//
-//    public static void optionMenu() {
-//        Agenda agenda = new Agenda();
-//        Scanner sc = new Scanner(System.in);
-//        System.out.println("Select an action from below:");
-//        int number = sc.nextInt();
-//        switch (number) {
-//            case 1:
-//                agenda.addContact(createContact());
-//                showMenu();
-//                break;
-//            case 2:
-//                agenda.listContacts();
-//                showMenu();
-//                break;
-//            case 3:
-//                agenda.removeContact(createContact());
-//                showMenu();
-//                break;
-//            case 4:
-//                agenda.editContact(createContact());
-//                break;
-//            case 5:
-//                agenda.searchContact(createContact());
-//                showMenu();
-//                break;
-//            case 6:
-//                System.exit(0);
-//                break;
-//        }
-//    }
+    public static void showMenu(Agenda agenda) {
+
+        System.out.println(" -----------------------------------------------");
+        System.out.println("|          Welcome to the Ana Agenda   |");
+        System.out.println(" -----------------------------------------------");
+        System.out.println();
+        System.out.println("                    MAIN MENU                   ");
+        System.out.println("1. Add contact");
+        System.out.println("2. List all contacts");
+        System.out.println("3. Remove contact");
+        System.out.println("4. Edit contact");
+        System.out.println("5. Search contact");
+        System.out.println("6. Exit");
+        showOptionsMenu(agenda);
+    }
+
+    public static void showOptionsMenu(Agenda agenda) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Select an action from below:");
+        int number = sc.nextInt();
+        switch (number) {
+            case 1:
+                agenda.addContact(createContact());
+                showMenu(agenda);
+                break;
+            case 2:
+                agenda.listContacts();
+                showMenu(agenda);
+                break;
+            case 3:
+                agenda.removeContact(createContact());
+                showMenu(agenda);
+                break;
+            case 4:
+                agenda.editContact(createContact());
+                break;
+            case 5:
+                agenda.searchContact(createContact());
+                showMenu(agenda);
+                break;
+            case 6:
+                System.exit(0);
+                break;
+        }
+    }
 
     public static Contact createContact() {
         Scanner sc = new Scanner(System.in);

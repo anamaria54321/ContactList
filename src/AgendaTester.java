@@ -52,31 +52,40 @@ public class AgendaTester {
 
     public static void showOptionsMenu(Agenda agenda) {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Select an action from below:");
-        int number = sc.nextInt();
-        switch (number) {
-            case 1:
-                agenda.addContact(createContact());
-                showMenu(agenda);
-                break;
-            case 2:
-                agenda.listContacts();
-                showMenu(agenda);
-                break;
-            case 3:
-                agenda.removeContact(createContact());
-                showMenu(agenda);
-                break;
-            case 4:
-                agenda.editContact(createContact());
-                break;
-            case 5:
-                agenda.searchContact(createContact());
-                showMenu(agenda);
-                break;
-            case 6:
-                System.exit(0);
-                break;
+        try {
+            System.out.println("Select an action from below:");
+            int number = sc.nextInt();
+            switch (number) {
+                case 1:
+                    agenda.addContact(createContact());
+                    showMenu(agenda);
+                    break;
+                case 2:
+                    agenda.listContacts();
+                    showMenu(agenda);
+                    break;
+                case 3:
+                    agenda.removeContact(createContact());
+                    showMenu(agenda);
+                    break;
+                case 4:
+                    agenda.editContact(createContact());
+                    break;
+                case 5:
+                    agenda.showSearchListContact(createContact());
+//                    try {
+//                        agenda.showSearchListContact(createContact());
+//                    } catch (Exception ClassCastException) {
+//                        System.out.println("something is wrong with my code");
+//                    }
+                    showMenu(agenda);
+                    break;
+                case 6:
+                    System.exit(0);
+                    break;
+            }
+        } catch (Exception InputMismatchException) {
+            System.out.println("Enter a number from 1 to 6");
         }
     }
 

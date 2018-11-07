@@ -74,31 +74,30 @@ public class Agenda {
 
         List<Contact> foundContacts = new ArrayList<>();
         if (gr != null) {
+
             foundContacts.addAll(gr.getContacts().stream()
-                    .filter(contact -> contact.getLastName().equals(name))
+                    .filter(contact -> contact.getLastName().contains(name))
                     .collect(Collectors.toList()));
         }
 
         return foundContacts;
     }
 
-    public void showSearchListContact(Contact c) {
+    public void showSearchListContact(Contact c, String name) {
         String firstLetter = c.getLastName().substring(0, 1);
         ContactGroup gr = agenda.get(firstLetter);
-        try {
+//        try {
             if (gr.getContactGroup().contains(c)) {
                 System.out.println(searchContact(c));
-            } else if (gr.getContactGroup().contains(c.getFirstName())
-                    || !(gr.getContactGroup().contains(c.getLastName()) ||
-                    !(gr.getContactGroup().contains(c.getNumber())))) {
-                System.out.println(searchListContact(c.getFirstName()));
+            } else if (gr.getContactGroup().contains(name)) {
+                System.out.println(searchListContact(name));
 
-            System.out.println("");
+                System.out.println("");
 
-        }}
-        catch (Exception ClassCastException) {
-            System.out.println("something is wrong with my code");
-        }
+            }
+//        } catch (Exception ClassCastException) {
+//            System.out.println("something is wrong with my code");
+//        }
 
     }
 

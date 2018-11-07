@@ -1,6 +1,16 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AgendaTester {
+
+    private static final String FIRST_NAME = "FIRST_NAME";
+    private static final String LAST_NAME = "FIRST_NAME";
+    private static final String PHONE_NUMBER = "PHONE_NUMBER";
 
     public static void main(String[] args) {
 //        Scanner sc = new Scanner(System.in);
@@ -12,6 +22,7 @@ public class AgendaTester {
 //        Contact c6 = new Contact("Vivescu", "Vivi", Prefix.GR, "0723589547");
 //        Contact c7 = new Contact("Didescu", "Didi", Prefix.DE, "0756982356");
         Agenda agenda = new Agenda();
+
 
 
 //        agenda.addContact(createContact());
@@ -72,7 +83,9 @@ public class AgendaTester {
                     agenda.editContact(createContact());
                     break;
                 case 5:
-                    agenda.showSearchListContact(createContact());
+                    agenda.searchContact(createContact());
+                    agenda.searchListContact(createName());
+//                    agenda.showSearchListContact(createContact(),createName());
 //                    try {
 //                        agenda.showSearchListContact(createContact());
 //                    } catch (Exception ClassCastException) {
@@ -86,6 +99,7 @@ public class AgendaTester {
             }
         } catch (Exception InputMismatchException) {
             System.out.println("Enter a number from 1 to 6");
+            showMenu(agenda);
         }
     }
 
@@ -103,5 +117,31 @@ public class AgendaTester {
         return c;
     }
 
+    public static String createName() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter name");
+        String name = sc.nextLine();
+        return name;
+    }
 
+    public static void readFile() {
+
+
+        String delimited =",";
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("ListContact.txt"));
+            String line = reader.readLine();
+            String[] splitedLine = line.split(",");
+            while(reader.readLine()!=null){
+
+
+                lineArray.add();
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Not found the file");
+        }catch (IOException ex){
+
+        }
+
+    }
 }

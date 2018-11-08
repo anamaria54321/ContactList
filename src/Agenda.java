@@ -1,7 +1,12 @@
+import java.io.*;
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Agenda {
+    private static final String FIRST_NAME = "FIRST_NAME";
+    private static final String LAST_NAME = "LAST_NAME";
+    private static final String PHONE_NUMBER = "PHONE_NUMBER";
     private Map<String, ContactGroup> agenda = new TreeMap<>();
 
 
@@ -38,12 +43,6 @@ public class Agenda {
 
         String firstLetter = c.getLastName().substring(0, 1);
         ContactGroup gr = agenda.get(firstLetter);
-
-//        if (gr != null) {
-//            if(gr.getContacts().contains(c)){
-//                c.setFirstName();
-//            };
-//        }
     }
 
     public void listContacts() {
@@ -87,21 +86,70 @@ public class Agenda {
         String firstLetter = c.getLastName().substring(0, 1);
         ContactGroup gr = agenda.get(firstLetter);
 //        try {
-            if (gr.getContactGroup().contains(c)) {
-                System.out.println(searchContact(c));
-            } else if (gr.getContactGroup().contains(name)) {
-                System.out.println(searchListContact(name));
+        if (gr.getContactGroup().contains(c)) {
+            System.out.println(searchContact(c));
+        } else if (gr.getContactGroup().contains(name)) {
+            System.out.println(searchListContact(name));
 
-                System.out.println("");
+            System.out.println("");
 
-            }
-//        } catch (Exception ClassCastException) {
-//            System.out.println("something is wrong with my code");
-//        }
+        }
 
     }
 
+    public void readFile() {
 
+        try(BufferedReader reader = new BufferedReader(new FileReader("ListContact.txt"))) {
+
+            List<String> lines = new ArrayList<>();
+            String line;
+            String[] splitedLine;
+            Map<String, Integer> agendaPhone = new TreeMap<>();
+            while ((line = reader.readLine()) != null) {
+                lines.add(line);
+                splitedLine = line.split(",");
+
+
+                if (line.contains(FIRST_NAME) && line.contains(LAST_NAME) && line.contains(PHONE_NUMBER)) {
+                    for (int i = 0; i < splitedLine.length; i++) {
+                        switch (splitedLine[i]) {
+                            case FIRST_NAME:
+                                agendaPhone.put(FIRST_NAME, i);
+                                break;
+                            case LAST_NAME:
+                                agendaPhone.put(LAST_NAME, i);
+                                break;
+                            case PHONE_NUMBER:
+                                agendaPhone.put(PHONE_NUMBER, i);
+                                break;
+                        }
+                    }
+                } else {
+                    Contact c = new Contact(splitedLine[agendaPhone.get(FIRST_NAME)],
+                            splitedLine[agendaPhone.get(LAST_NAME)],
+                            splitedLine[agendaPhone.get(PHONE_NUMBER)]);
+                    addContact(c);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("The file was not found\n" + e);
+        } catch (IOException ex) {
+            System.out.println("Failed to read content from file " + "ListContact.txt" + "\n" + ex);
+        }
+
+    }
+
+    public void writeFile() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("ListContact.txt"))) {
+            String[] stringArr;
+            String line;
+            for (int i=0;i<stringArr.length;i++)
+            line=stringArr[i].concat(stringArr[i+1]).concat(i+2);
+        } catch (IOException ex) {
+            System.out.println("Failed to write content to file " + "ListContact.txt" + "\n" + ex);
+
+        }
+    }
 }
 
 

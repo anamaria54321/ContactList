@@ -1,5 +1,4 @@
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -7,22 +6,22 @@ public class Agenda {
     private static final String FIRST_NAME = "FIRST_NAME";
     private static final String LAST_NAME = "LAST_NAME";
     private static final String PHONE_NUMBER = "PHONE_NUMBER";
-    private Map<String, ContactGroup> agenda = new TreeMap<>();
+    private Map<String, ContactGroup> contactGroups = new TreeMap<>();
 
 
-    public Map<String, ContactGroup> getAgenda() {
-        return agenda;
+    public Map<String, ContactGroup> getContactGroups() {
+        return contactGroups;
     }
 
 
     public void addContact(Contact c) {
 
         String firstLetter = c.getLastName().substring(0, 1);
-        ContactGroup gr = agenda.get(firstLetter);
+        ContactGroup gr = contactGroups.get(firstLetter);
 
         if (gr == null) {
             gr = new ContactGroup();
-            agenda.put(firstLetter, gr);
+            contactGroups.put(firstLetter, gr);
         }
 
         gr.addContact(c);
@@ -32,23 +31,25 @@ public class Agenda {
     public void removeContact(Contact c) {
 
         String firstLetter = c.getLastName().substring(0, 1);
-        ContactGroup gr = agenda.get(firstLetter);
+        ContactGroup gr = contactGroups.get(firstLetter);
 
         if (gr != null) {
             gr.getContacts().remove(c);
         }
+
+//        writeAgendaToFile();
     }
 
     public void editContact(Contact c) {
 
         String firstLetter = c.getLastName().substring(0, 1);
-        ContactGroup gr = agenda.get(firstLetter);
+        ContactGroup gr = contactGroups.get(firstLetter);
     }
 
     public void listContacts() {
-        for (Map.Entry<String, ContactGroup> entry : agenda.entrySet()) {
+        for (Map.Entry<String, ContactGroup> entry : contactGroups.entrySet()) {
             System.out.println("\n" + entry.getKey());
-            entry.getValue().getContactGroup().forEach(System.out::println);
+            entry.getValue().getContacts().forEach(System.out::println);
 
         }
     }
@@ -57,7 +58,7 @@ public class Agenda {
     public Optional<Contact> searchContact(Contact c) {
 
         String firstLetter = c.getLastName().substring(0, 1);
-        ContactGroup gr = agenda.get(firstLetter);
+        ContactGroup gr = contactGroups.get(firstLetter);
 
         if (gr != null) {
             return gr.getContacts().stream()
@@ -69,7 +70,7 @@ public class Agenda {
 
     public List<Contact> searchListContact(String name) {
         String firstLetter = name.substring(0, 1);
-        ContactGroup gr = agenda.get(firstLetter);
+        ContactGroup gr = contactGroups.get(firstLetter);
 
         List<Contact> foundContacts = new ArrayList<>();
         if (gr != null) {
@@ -84,11 +85,11 @@ public class Agenda {
 
     public void showSearchListContact(Contact c, String name) {
         String firstLetter = c.getLastName().substring(0, 1);
-        ContactGroup gr = agenda.get(firstLetter);
+        ContactGroup gr = contactGroups.get(firstLetter);
 //        try {
-        if (gr.getContactGroup().contains(c)) {
+        if (gr.getContacts().contains(c)) {
             System.out.println(searchContact(c));
-        } else if (gr.getContactGroup().contains(name)) {
+        } else if (gr.getContacts().contains(name)) {
             System.out.println(searchListContact(name));
 
             System.out.println("");
@@ -99,7 +100,7 @@ public class Agenda {
 
     public void readFile() {
 
-        try(BufferedReader reader = new BufferedReader(new FileReader("ListContact.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("ListContact.txt"))) {
 
             List<String> lines = new ArrayList<>();
             String line;
@@ -142,20 +143,65 @@ public class Agenda {
 
     public void writeFile(Contact c) {
         addContact(c);
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("ListContact.txt",true))) {
-            String[] stringArr ={c.getFirstName(),",",c.getLastName(),",",c.getNumber()};
-            String line="";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("ListContact.txt", true))) {
+            String[] stringArr = {c.getFirstName(), ",", c.getLastName(), ",", c.getNumber()};
+            String line = "";
             writer.newLine();
-            for (int i=0;i<stringArr.length;i++){
-            line=stringArr[i];
-            writer.append(line);
+            for (int i = 0; i < stringArr.length; i++) {
+                line = stringArr[i];
+                writer.append(line);
+            }
+
+        } catch (IOException ex) {
+            System.out.println("Failed to write content to file " + "ListContact.txt" + "\n" + ex);
+
+        }
+    }
+
+    public void deleteContactFile(Contact c) {
+        for (Map.Entry<String, ContactGroup> entry : contactGroups.entrySet()) {
+            entry.getValue().getContacts().stream().collect(Collectors.toList());
+        }
+
+        try (BufferedWriter bW = new BufferedWriter(new FileWriter("ListContact.txt", true))) {
+            List<String> lines = new ArrayList<>();
+            String lineIg = c.getFirstName() + "," + c.getLastName() + "," + c.getNumber();
+            for (String line : lines) {
+                if (!lines.contains(lineIg)) {
+                    bW.write(line);
+                }
             }
         } catch (IOException ex) {
             System.out.println("Failed to write content to file " + "ListContact.txt" + "\n" + ex);
 
         }
     }
+
+    public void writeAgendaToFile() {
+//        List<Contact> contacts = contactGroups.values().stream()
+//                .map(gr -> gr.getContacts())
+//                .flatMap(Collection::stream)
+//                .collect(Collectors.toList());
+
+        List<Contact> contacts = new ArrayList<>();
+        for (ContactGroup group : contactGroups.values()) {
+            contacts.addAll(group.getContacts());
+        }
+
+        try (BufferedWriter bW = new BufferedWriter(new FileWriter("ListContact.txt", true))) {
+            bW.write("FIRST_NAME,LAST_NAME,PHONE_NUMBER\n");
+
+            // first line is file header
+            // next lines are contacts from contact groups
+            for (Contact contact : contacts) {
+                bW.write(contact.getFirstName() + "," + contact.getLastName() + "," + contact.getNumber() + "\n");
+            }
+        } catch (IOException ex) {
+            System.out.println("Failed to write content to file " + "ListContact.txt" + "\n" + ex);
+        }
+    }
 }
+
 
 
 

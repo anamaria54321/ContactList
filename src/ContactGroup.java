@@ -1,27 +1,20 @@
-import javax.sql.rowset.Predicate;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 public class ContactGroup {
-    private Set<Contact> contactGroup;
-
+    private Set<Contact> contacts;
 
     public ContactGroup() {
-        this.contactGroup = new TreeSet<Contact>();;
+        this.contacts = new TreeSet<Contact>();
     }
 
     public Set<Contact> getContacts() {
-        return contactGroup;
+        return contacts;
     }
 
     public void addContact(Contact contact) {
-        contactGroup.add(contact);
-    }
-
-    public Set<Contact> getContactGroup() {
-        return contactGroup;
+        contacts.add(contact);
     }
 
     @Override
@@ -29,11 +22,11 @@ public class ContactGroup {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ContactGroup that = (ContactGroup) o;
-        return Objects.equals(contactGroup, that.contactGroup);
+        return Objects.equals(contacts, that.contacts);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(contactGroup);
+        return Objects.hash(contacts);
     }
 }

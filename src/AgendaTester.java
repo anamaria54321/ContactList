@@ -20,6 +20,7 @@ public class AgendaTester {
         Agenda agenda = new Agenda();
 //        agenda.readFile();
 
+
 //        agenda.addContact(createContact());
 //        agenda.addContact(createContact());
 //        agenda.addContact(createContact());

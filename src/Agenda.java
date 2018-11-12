@@ -131,20 +131,25 @@ public class Agenda {
                     addContact(c);
                 }
             }
+
         } catch (FileNotFoundException e) {
             System.out.println("The file was not found\n" + e);
         } catch (IOException ex) {
             System.out.println("Failed to read content from file " + "ListContact.txt" + "\n" + ex);
         }
-
+        listContacts();
     }
 
-    public void writeFile() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("ListContact.txt"))) {
-            String[] stringArr;
-            String line;
-            for (int i=0;i<stringArr.length;i++)
-            line=stringArr[i].concat(stringArr[i+1]).concat(i+2);
+    public void writeFile(Contact c) {
+        addContact(c);
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("ListContact.txt",true))) {
+            String[] stringArr ={c.getFirstName(),",",c.getLastName(),",",c.getNumber()};
+            String line="";
+            writer.newLine();
+            for (int i=0;i<stringArr.length;i++){
+            line=stringArr[i];
+            writer.append(line);
+            }
         } catch (IOException ex) {
             System.out.println("Failed to write content to file " + "ListContact.txt" + "\n" + ex);
 

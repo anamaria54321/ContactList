@@ -18,7 +18,7 @@ public class AgendaTester {
 //        Contact c6 = new Contact("Vivescu", "Vivi", Prefix.GR, "0723589547");
 //        Contact c7 = new Contact("Didescu", "Didi", Prefix.DE, "0756982356");
         Agenda agenda = new Agenda();
-        agenda.readFile();
+//        agenda.readFile();
 
 //        agenda.addContact(createContact());
 //        agenda.addContact(createContact());
@@ -63,11 +63,13 @@ public class AgendaTester {
             int number = sc.nextInt();
             switch (number) {
                 case 1:
-                    agenda.addContact(createContact());
+                    agenda.writeFile(createContact());
+//                    agenda.addContact(createContact());
                     showMenu(agenda);
                     break;
                 case 2:
-                    agenda.listContacts();
+                    agenda.readFile();
+//                    agenda.listContacts();
                     showMenu(agenda);
                     break;
                 case 3:

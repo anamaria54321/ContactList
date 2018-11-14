@@ -37,13 +37,29 @@ public class Agenda {
             gr.getContacts().remove(c);
         }
 
-//        writeAgendaToFile();
+        writeAgendaToFile();
     }
 
     public void editContact(Contact c) {
-
+        Scanner sc = new Scanner(System.in);
         String firstLetter = c.getLastName().substring(0, 1);
         ContactGroup gr = contactGroups.get(firstLetter);
+
+
+        if (gr != null) {
+
+            for (Contact contact : gr.getContacts()) {
+                if (contact.equals(c)) {
+                    System.out.println("edit last name: ");
+                    contact.setLastName(sc.nextLine());
+                    System.out.println("edit first name: ");
+                    contact.setFirstName(sc.nextLine());
+                    System.out.println("edit number: ");
+                    contact.setNumber(sc.nextLine());
+                    break;
+                }
+            }
+        }
     }
 
     public void listContacts() {
@@ -139,6 +155,7 @@ public class Agenda {
             System.out.println("Failed to read content from file " + "ListContact.txt" + "\n" + ex);
         }
         listContacts();
+
     }
 
     public void writeFile(Contact c) {
@@ -158,24 +175,24 @@ public class Agenda {
         }
     }
 
-    public void deleteContactFile(Contact c) {
-        for (Map.Entry<String, ContactGroup> entry : contactGroups.entrySet()) {
-            entry.getValue().getContacts().stream().collect(Collectors.toList());
-        }
-
-        try (BufferedWriter bW = new BufferedWriter(new FileWriter("ListContact.txt", true))) {
-            List<String> lines = new ArrayList<>();
-            String lineIg = c.getFirstName() + "," + c.getLastName() + "," + c.getNumber();
-            for (String line : lines) {
-                if (!lines.contains(lineIg)) {
-                    bW.write(line);
-                }
-            }
-        } catch (IOException ex) {
-            System.out.println("Failed to write content to file " + "ListContact.txt" + "\n" + ex);
-
-        }
-    }
+//    public void deleteContactFile(Contact c) {
+//        for (Map.Entry<String, ContactGroup> entry : contactGroups.entrySet()) {
+//            entry.getValue().getContacts().stream().collect(Collectors.toList());
+//        }
+//
+//        try (BufferedWriter bW = new BufferedWriter(new FileWriter("ListContact.txt"))) {
+//            List<String> lines = new ArrayList<>();
+//            String lineIg = c.getFirstName() + "," + c.getLastName() + "," + c.getNumber();
+//            for (String line : lines) {
+//                if (!lines.contains(lineIg)) {
+//                    bW.write(line);
+//                }
+//            }
+//        } catch (IOException ex) {
+//            System.out.println("Failed to write content to file " + "ListContact.txt" + "\n" + ex);
+//
+//        }
+//    }
 
     public void writeAgendaToFile() {
 //        List<Contact> contacts = contactGroups.values().stream()
@@ -188,13 +205,14 @@ public class Agenda {
             contacts.addAll(group.getContacts());
         }
 
-        try (BufferedWriter bW = new BufferedWriter(new FileWriter("ListContact.txt", true))) {
-            bW.write("FIRST_NAME,LAST_NAME,PHONE_NUMBER\n");
-
+        try (BufferedWriter bW = new BufferedWriter(new FileWriter("ListContact.txt"))) {
+            bW.write("FIRST_NAME,LAST_NAME,PHONE_NUMBER");
+            bW.newLine();
             // first line is file header
             // next lines are contacts from contact groups
             for (Contact contact : contacts) {
-                bW.write(contact.getFirstName() + "," + contact.getLastName() + "," + contact.getNumber() + "\n");
+                bW.write(contact.getFirstName() + "," + contact.getLastName() + "," + contact.getNumber());
+                bW.newLine();
             }
         } catch (IOException ex) {
             System.out.println("Failed to write content to file " + "ListContact.txt" + "\n" + ex);

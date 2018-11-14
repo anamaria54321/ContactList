@@ -7,7 +7,6 @@ import java.util.*;
 public class AgendaTester {
 
 
-
     public static void main(String[] args) {
 //        Scanner sc = new Scanner(System.in);
 //        Contact c1 = new Contact("Ionescu", "Ana", Prefix.RO, "0745123256");
@@ -18,6 +17,7 @@ public class AgendaTester {
 //        Contact c6 = new Contact("Vivescu", "Vivi", Prefix.GR, "0723589547");
 //        Contact c7 = new Contact("Didescu", "Didi", Prefix.DE, "0756982356");
         Agenda agenda = new Agenda();
+        BackupManager backupManager=new BackupManager();
 //        agenda.readFile();
 
 
@@ -36,7 +36,7 @@ public class AgendaTester {
 
 //        agenda.searchContact(createContact());
 
-
+        agenda.readFile();
 //
         showMenu(agenda);
     }
@@ -69,8 +69,8 @@ public class AgendaTester {
                     showMenu(agenda);
                     break;
                 case 2:
-                    agenda.readFile();
-//                    agenda.listContacts();
+
+                    agenda.listContacts();
                     showMenu(agenda);
                     break;
                 case 3:
@@ -122,5 +122,46 @@ public class AgendaTester {
         return name;
     }
 
+    public static void showBackups(BackupManager backupManager) {
 
+        System.out.println(" -----------------------------------------------");
+        System.out.println("|                   Backups                    |");
+        System.out.println(" -----------------------------------------------");
+        System.out.println();
+        System.out.println("                    MAIN MENU                   ");
+        System.out.println("1. Create");
+        System.out.println("2. View backup file details");
+        System.out.println("3. Load");
+        System.out.println("4. Remove");
+        System.out.println("5. Return Agenda");
+        showOptionsMenuBackups(backupManager);
+    }
+
+    public static void showOptionsMenuBackups(BackupManager backupManager) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Select an action from below:");
+        int number = sc.nextInt();
+        switch (number) {
+            case 1:
+                backupManager.createBackup();
+//
+                showBackups(backupManager);
+                break;
+            case 2:
+                backupManager.viewBackup();
+                showBackups(backupManager);
+                break;
+            case 3:
+                backupManager.loadBackup();
+                showBackups(backupManager);
+                break;
+            case 4:
+                backupManager.removeBackup();
+                showBackups(backupManager);
+                break;
+            case 5:
+//                showMenu();
+
+        }
+    }
 }

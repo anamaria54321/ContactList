@@ -9,6 +9,7 @@ public class Agenda {
     private Map<String, ContactGroup> contactGroups = new TreeMap<>();
 
 
+
     public Map<String, ContactGroup> getContactGroups() {
         return contactGroups;
     }
@@ -154,7 +155,7 @@ public class Agenda {
         } catch (IOException ex) {
             System.out.println("Failed to read content from file " + "ListContact.txt" + "\n" + ex);
         }
-        //listContacts();
+
 
     }
 
@@ -163,7 +164,7 @@ public class Agenda {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("ListContact.txt", true))) {
             String[] stringArr = {c.getFirstName(), ",", c.getLastName(), ",", c.getNumber()};
             String line = "";
-           // writer.newLine();
+
             for (int i = 0; i < stringArr.length; i++) {
                 line = stringArr[i];
                 writer.append(line);
@@ -173,6 +174,7 @@ public class Agenda {
             System.out.println("Failed to write content to file " + "ListContact.txt" + "\n" + ex);
 
         }
+
     }
 
 //    public void deleteContactFile(Contact c) {

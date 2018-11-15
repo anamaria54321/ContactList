@@ -122,7 +122,7 @@ public class AgendaTester {
         return name;
     }
 
-    public static void showBackups(BackupManager backupManager) {
+    public static void showBackups(BackupManager backupManager,Agenda agenda) {
 
         System.out.println(" -----------------------------------------------");
         System.out.println("|                   Backups                    |");
@@ -133,11 +133,11 @@ public class AgendaTester {
         System.out.println("2. View backup file details");
         System.out.println("3. Load");
         System.out.println("4. Remove");
-        System.out.println("5. Return Agenda");
-        showOptionsMenuBackups(backupManager);
+        System.out.println("5. Back to previous menu");
+        showOptionsMenuBackups(backupManager,agenda);
     }
 
-    public static void showOptionsMenuBackups(BackupManager backupManager) {
+    public static void showOptionsMenuBackups(BackupManager backupManager,Agenda agenda) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Select an action from below:");
         int number = sc.nextInt();
@@ -145,22 +145,22 @@ public class AgendaTester {
             case 1:
                 backupManager.createBackup();
 //
-                showBackups(backupManager);
+                showBackups(backupManager,agenda);
                 break;
             case 2:
                 backupManager.viewBackup();
-                showBackups(backupManager);
+                showBackups(backupManager,agenda);
                 break;
             case 3:
                 backupManager.loadBackup();
-                showBackups(backupManager);
+                showBackups(backupManager,agenda);
                 break;
             case 4:
                 backupManager.removeBackup();
-                showBackups(backupManager);
+                showBackups(backupManager,agenda);
                 break;
             case 5:
-//                showMenu();
+                showMenu(agenda);
 
         }
     }

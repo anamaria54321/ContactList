@@ -1,13 +1,11 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.Scanner;
 
 public class AgendaTester {
+    public static final String originalFile = "ListContact.txt";
 
-
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 //        Scanner sc = new Scanner(System.in);
 //        Contact c1 = new Contact("Ionescu", "Ana", Prefix.RO, "0745123256");
 //        Contact c2 = new Contact("Dinescu", "Ana", Prefix.RO, "0744447895");
@@ -17,9 +15,9 @@ public class AgendaTester {
 //        Contact c6 = new Contact("Vivescu", "Vivi", Prefix.GR, "0723589547");
 //        Contact c7 = new Contact("Didescu", "Didi", Prefix.DE, "0756982356");
         Agenda agenda = new Agenda();
-        BackupManager backupManager=new BackupManager();
+        BackupManager backupManager = new BackupManager();
 //        agenda.readFile();
-
+//        backupManager.viewBackup();
 
 //        agenda.addContact(createContact());
 //        agenda.addContact(createContact());
@@ -38,10 +36,10 @@ public class AgendaTester {
 
         agenda.readFile();
 //
-        showMenu(agenda);
+        showMenu(backupManager, agenda);
     }
 
-    public static void showMenu(Agenda agenda) {
+    public static void showMenu(BackupManager backupManager, Agenda agenda) {
 
         System.out.println(" -----------------------------------------------");
         System.out.println("|          Welcome to the Ana Agenda   |");
@@ -53,11 +51,12 @@ public class AgendaTester {
         System.out.println("3. Remove contact");
         System.out.println("4. Edit contact");
         System.out.println("5. Search contact");
-        System.out.println("6. Exit");
-        showOptionsMenu(agenda);
+        System.out.println("6. Backups");
+        System.out.println("7. Exit");
+        showOptionsMenu(backupManager, agenda);
     }
 
-    public static void showOptionsMenu(Agenda agenda) {
+    public static void showOptionsMenu(BackupManager backupManager, Agenda agenda) {
         Scanner sc = new Scanner(System.in);
         try {
             System.out.println("Select an action from below:");
@@ -66,16 +65,15 @@ public class AgendaTester {
                 case 1:
                     agenda.writeFile(createContact());
 //                    agenda.addContact(createContact());
-                    showMenu(agenda);
+                    showMenu(backupManager, agenda);
                     break;
                 case 2:
-
                     agenda.listContacts();
-                    showMenu(agenda);
+                    showMenu(backupManager, agenda);
                     break;
                 case 3:
                     agenda.removeContact(createContact());
-                    showMenu(agenda);
+                    showMenu(backupManager, agenda);
                     break;
                 case 4:
                     agenda.editContact(createContact());
@@ -89,15 +87,18 @@ public class AgendaTester {
 //                    } catch (Exception ClassCastException) {
 //                        System.out.println("something is wrong with my code");
 //                    }
-                    showMenu(agenda);
+                    showMenu(backupManager, agenda);
                     break;
                 case 6:
+                    showBackups(backupManager, agenda);
+                    break;
+                case 7:
                     System.exit(0);
                     break;
             }
         } catch (Exception InputMismatchException) {
             System.out.println("Enter a number from 1 to 6");
-            showMenu(agenda);
+            showMenu(backupManager, agenda);
         }
     }
 
@@ -122,7 +123,7 @@ public class AgendaTester {
         return name;
     }
 
-    public static void showBackups(BackupManager backupManager,Agenda agenda) {
+    public static void showBackups(BackupManager backupManager, Agenda agenda) throws IOException {
 
         System.out.println(" -----------------------------------------------");
         System.out.println("|                   Backups                    |");
@@ -130,37 +131,37 @@ public class AgendaTester {
         System.out.println();
         System.out.println("                    MAIN MENU                   ");
         System.out.println("1. Create");
-        System.out.println("2. View backup file details");
+        System.out.println("2. View");
         System.out.println("3. Load");
         System.out.println("4. Remove");
         System.out.println("5. Back to previous menu");
-        showOptionsMenuBackups(backupManager,agenda);
+        showOptionsMenuBackups(backupManager, agenda);
     }
 
-    public static void showOptionsMenuBackups(BackupManager backupManager,Agenda agenda) {
+    public static void showOptionsMenuBackups(BackupManager backupManager, Agenda agenda) throws IOException {
         Scanner sc = new Scanner(System.in);
         System.out.println("Select an action from below:");
         int number = sc.nextInt();
         switch (number) {
             case 1:
-                backupManager.createBackup();
-//
-                showBackups(backupManager,agenda);
+                backupManager.createBackup(new File(originalFile));
+                showBackups(backupManager, agenda);
                 break;
             case 2:
                 backupManager.viewBackup();
-                showBackups(backupManager,agenda);
+                showBackups(backupManager, agenda);
                 break;
             case 3:
                 backupManager.loadBackup();
-                showBackups(backupManager,agenda);
+                showBackups(backupManager, agenda);
                 break;
             case 4:
                 backupManager.removeBackup();
-                showBackups(backupManager,agenda);
+                showBackups(backupManager, agenda);
                 break;
             case 5:
-                showMenu(agenda);
+                showMenu(backupManager, agenda);
+                break;
 
         }
     }

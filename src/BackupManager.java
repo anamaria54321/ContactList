@@ -1,7 +1,10 @@
+import org.omg.CORBA.Environment;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -25,32 +28,30 @@ public class BackupManager {
         // TODO: figure out backup file name
 
         String pathName = "/contactListAgenda";
-
-//        String baseName = pathName.substring(0, pathName.lastIndexOf("."));
-//        String extension = pathName.substring(pathName.lastIndexOf("."));
-
         return (Files.copy(original.toPath(), new File(BACKUP_LOCATION_DIR + pathName
                 + new Date().getTime() + BACKUP_EXT).toPath()));
 
     }
 
-
-//    public void createBackup(List<String> lines) throws IOException {
-//        File fileName = new File("ContactListAgenda.csv");
-//        File dirName = new File("Backups");
-//        if (!fileName.exists()) {
-//            fileName.createNewFile();
-//        }
-//
-//    }
-
-    public void viewBackup() {
-        String[] paths = backupDir.list();
-        for (String path : paths) {
-            System.out.println(path);
+    public void viewBackup() throws IOException {
+        File[] paths = backupDir.listFiles();
+        for (int i = 0; i < paths.length; i++) {
+            if (paths[i].isFile()) {
+                System.out.println("File " + paths[i].getName());
+                BasicFileAttributes attr = Files.readAttributes(paths[i].toPath(), BasicFileAttributes.class);
+//                System.out.println("creationTime: " + " " +attr.creationTime());
+                System.out.println("creationTime: " + "" + new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format((attr.creationTime().toMillis())));
+                System.out.println("lastAccessTime: " +" " + attr.lastAccessTime());
+                System.out.println("lastModifiedTime: " +" " + attr.lastModifiedTime());
+                System.out.println("isDirectory: " + " " +attr.isDirectory());
+                System.out.println("isRegularFile: " +" " + attr.isRegularFile());
+                System.out.println("size: " + " " +attr.size());
+            } else if (paths[i].isDirectory()) {
+                System.out.println("Directory " + paths[i].getName());
+            }
         }
-//        BasicFileAttributes attr = Files.readAttributes(file, BasicFileAttributes.class);
     }
+
 
     public void loadBackup() {
 //        se citeste un backup si se rescrie fisierul ListContact.txt deoarece am pierdut ceva informatii
@@ -58,6 +59,6 @@ public class BackupManager {
     }
 
     public void removeBackup() {
-//////////////jjjjjjj
+
     }
 }

@@ -51,7 +51,7 @@ public class BackupManager {
             }
         }
     }
-
+////////
 
     public void loadBackup() {
 //        se citeste un backup si se rescrie fisierul ListContact.txt deoarece am pierdut ceva informatii

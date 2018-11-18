@@ -15,6 +15,17 @@ public class Agenda {
         return contactGroups;
     }
 
+    public static String getFirstName() {
+        return FIRST_NAME;
+    }
+
+    public static String getLastName() {
+        return LAST_NAME;
+    }
+
+    public static String getPhoneNumber() {
+        return PHONE_NUMBER;
+    }
 
     public void addContact(Contact c) {
 

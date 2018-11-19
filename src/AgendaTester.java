@@ -50,7 +50,7 @@ public class AgendaTester {
                     showMenu(backupManager, agenda);
                     break;
                 case 4:
-                    agenda.editContact(createContact());
+                    agenda.editContact(createContact(),createContact());
                     break;
                 case 5:
                     agenda.searchContact(createContact());

@@ -53,26 +53,9 @@ public class Agenda {
         writeAgendaToFile();
     }
 
-    public void editContact(Contact c) {
-        Scanner sc = new Scanner(System.in);
-        String firstLetter = c.getLastName().substring(0, 1);
-        ContactGroup gr = contactGroups.get(firstLetter);
-
-
-        if (gr != null) {
-
-            for (Contact contact : gr.getContacts()) {
-                if (contact.equals(c)) {
-                    System.out.println("edit last name: ");
-                    contact.setLastName(sc.nextLine());
-                    System.out.println("edit first name: ");
-                    contact.setFirstName(sc.nextLine());
-                    System.out.println("edit number: ");
-                    contact.setNumber(sc.nextLine());
-                    break;
-                }
-            }
-        }
+    public void editContact(Contact c, Contact newC) {
+        removeContact(c);
+        addContact(newC);
     }
 
     public void listContacts() {

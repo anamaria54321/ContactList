@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class BackupManager {
-
+//C:\Users\User\Desktop\ListContact1.txt
     private static final String BACKUP_LOCATION_DIR = "backups";
     private static final String BACKUP_EXT = ".bak";
     private static final DateFormat dateFormat = new SimpleDateFormat("-dd_MM_yyyy-hh:mm:ss");
@@ -64,10 +64,6 @@ public class BackupManager {
                 System.out.println(path);
             }
         }
-        File file = new File(path);
-
-//D:\ListContact1.txt
-
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             BufferedWriter writer = new BufferedWriter(new FileWriter("ListContact.txt"));
 

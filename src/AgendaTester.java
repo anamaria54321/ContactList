@@ -1,15 +1,30 @@
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class AgendaTester {
     public static final String originalFile = "ListContact.txt";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         Agenda agenda = new Agenda();
         BackupManager backupManager = new BackupManager();
-        agenda.readFile();
+//        agenda.readFile();
+
+        ExecutorService executorService= Executors.newFixedThreadPool(1);
+        Future<?> future=executorService.submit(()-> {
+            try {
+                agenda.readFile();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        future.get();
         showMenu(backupManager, agenda);
     }
 

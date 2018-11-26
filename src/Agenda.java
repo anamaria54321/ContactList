@@ -10,7 +10,6 @@ public class Agenda {
     private Map<String, ContactGroup> contactGroups = new TreeMap<>();
 
 
-
     public Map<String, ContactGroup> getContactGroups() {
         return contactGroups;
     }
@@ -110,8 +109,8 @@ public class Agenda {
 
     }
 
-    public void readFile() {
-
+    public void readFile() throws Exception {
+        Thread.sleep(10000);
         try (BufferedReader reader = new BufferedReader(new FileReader("ListContact.txt"))) {
 
             List<String> lines = new ArrayList<>();
